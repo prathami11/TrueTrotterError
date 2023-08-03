@@ -1,0 +1,67 @@
+[
+  {
+    "Molecule": "H2",
+    "QWC_LF": 0.211,
+    "QWC_SI": 0.211,
+    "FC_LF": 0.211,
+    "FC_SI": 0.211,
+    "LR_LCU": 0.211,
+    "GFRO_LCU": 0.211,
+    "FRO": 0.211,
+    "LR": 0.211,
+    "GFRO": 0.211,
+    "SD_GFRO": 0.211
+  },
+  {
+    "Molecule": "LiH",
+    "QWC_LF": 4.93,
+    "QWC_SI": 1.65,
+    "FC_LF": 3.35,
+    "FC_SI": 1.56,
+    "LR_LCU": 0.78,
+    "GFRO_LCU": 0.68,
+    "FRO": 18.8,
+    "LR": 2.21,
+    "GFRO": 2.166,
+    "SD_GFRO": 0.98
+  },
+  {
+    "Molecule": "BeH2",
+    "QWC_LF": 12.85,
+    "QWC_SI": 4.41,
+    "FC_LF": 14.23,
+    "FC_SI": 3.72,
+    "LR_LCU": 2.31,
+    "GFRO_LCU": 2.04,
+    "FRO": 25.87,
+    "LR": 4.97,
+    "GFRO": 4.7,
+    "SD_GFRO": 2.87
+  },
+  {
+    "Molecule": "H2O",
+    "QWC_LF": 102.47,
+    "QWC_SI": 38.08,
+    "FC_LF": 128.56,
+    "FC_SI": 33,
+    "LR_LCU": 13.35,
+    "GFRO_LCU": 12.4,
+    "FRO": 151.19,
+    "LR": 34.9,
+    "GFRO": 33.35,
+    "SD_GFRO": 23.38
+  },
+  {
+    "Molecule": "NH3",
+    "QWC_LF": 82.25,
+    "QWC_SI": 31.59,
+    "FC_LF": 85.51,
+    "FC_SI": 26.46,
+    "LR_LCU": 10.26,
+    "GFRO_LCU": 9.185,
+    "FRO": 203.19,
+    "LR": 27.13,
+    "GFRO": 25.59,
+    "SD_GFRO": 34.36
+  }
+]
