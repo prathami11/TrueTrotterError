@@ -12,13 +12,14 @@ from scipy import linalg
 import pickle
 import saveload_utils as sl
 
-def trotter(method, h_ferm, n_qubits,t):
+def trotter(method,mol, h_ferm, n_qubits,t):
     start = time.time()
     print("Start")
-    #if not os.path.isdir('./New_Results/H2'):
-    #    os.mkdir('./New_Results/H2/')
+    # Creating Directory for the molecule to store results, uncomment when needed
+    #if not os.path.isdir('./Exact_Alphas/'+mol):
+    #    os.mkdir('./Exact_Alphas/'+mol+'/')
     # Importing Fragments
-    f = open("./Frag_Lib/"+method+"/h2_"+method+"Frags", 'rb')
+    f = open("./Frag_Lib/"+method+"/"+mol+"_"+method+"Frags", 'rb')
     dict = pickle.load(f)
     f.close()
     ListFrags=dict['grouping'] # stores all the fragments
@@ -37,7 +38,6 @@ def trotter(method, h_ferm, n_qubits,t):
     print("trotterized state done")
     w,v = sp.linalg.eig(exact_state.todense()-trotter_state.todense())
     z = max(abs(w))
-    print(z)
     error = z/t**2
     print(error)
     results = {}
@@ -49,20 +49,19 @@ def trotter(method, h_ferm, n_qubits,t):
     results['dt_sq'] = t**2
     results['number_frags'] = number_frags
     results['total_time'] = total_time
-    f=open('./Exact_Alphas/H2/'+method,'wb')
+    f=open('./Exact_Alphas/'+mol+'/'+method,'wb')
     pickle.dump(results,f)
     f.close()
     print("Done executing after",total_time, "hrs")
 
-# hamiltonian
-h_ferm=sl.load_fermionic_hamiltonian("h2",path_prefix) # fermionic hamiltonian wrt molecule
-n_qubits = openfermion.count_qubits(h_ferm) # no. of qubits
+
 t=1e-5 # time step
-# generating results for fermionic based partitioning methods (options: svd, SVDLCU, GCSASD, GFROLCU, FRO, GFRO)
-# coment / uncomment these lines for the required methods
-trotter("svd",h_ferm, n_qubits, t)
-trotter("SVDLCU",h_ferm, n_qubits, t)
-trotter("FRO",h_ferm, n_qubits, t)
-trotter("GFRO",h_ferm, n_qubits, t)
-trotter("GFROLCU",h_ferm,n_qubits, t)
-trotter("GCSASD", h_ferm,n_qubits, t)
+method = "svd" # options: svd, SVDLCU, FRO, GFRO, GFROLCU, GCSASD
+mol = "h2" # option: h2, lih, beh2, h2o, nh3
+# hamiltonian
+h_ferm=sl.load_fermionic_hamiltonian(mol,path_prefix) # fermionic hamiltonian wrt molecule
+n_qubits = openfermion.count_qubits(h_ferm) # no. of qubits
+# generating results for fermionic based partitioning methods
+# change method and molecule as needed
+trotter(method,mol,h_ferm, n_qubits, t)
+
