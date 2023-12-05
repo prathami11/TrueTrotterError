@@ -1,16 +1,14 @@
 
 To generate the $\epsilon$ table for smaller molecules like H2 and LiH:
 1. Directly run the python code trotter_ferm.py for the fermionic partitioning methods and run trotter_qubit.py for the qubit-based partitioning techniques
-
-
-To generate the $\epsilon$ table for larger molecules with a high number of fragments for trotterization like, $H_{2}O$, $BeH_{2}$, $NH_{3}$, follow the subsequent steps:
+  To generate the $\epsilon$ table for larger molecules with a high number of fragments for trotterization like, $H_{2}O$, $BeH_{2}$, $NH_{3}$, follow the subsequent steps:
 
 
 A. For fermionic partitioning methods:
 
   1. Run the code shrink_ham.py to generate the symmetry-adapted Hamiltonians, wavefunctions and the unitary matrices needed to shrink the Hamiltonian fragments. The output will be saved in the "SymFrags" directory.
   2. Then, run the code shrink_fargs.py to generate and store the symmetry-adapted Hamiltonian fragments in their matrix form in the "MatrixFrags" directory.
-  3. 3. Finally run trotter_symred.py to import the previously generated symmetry-adapted fragments, wavefunctions and Hamiltonians stored in the "MatrixFrags" and "SymFrags" folder and generate $\epsilon$ values.
+  3. Finally run trotter_symred.py to import the previously generated symmetry-adapted fragments, wavefunctions and Hamiltonians stored in the "MatrixFrags" and "SymFrags" folder and generate $\epsilon$ values.
 
 
 
