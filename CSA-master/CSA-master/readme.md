@@ -1,6 +1,8 @@
 
 To generate the $\epsilon$ table for smaller molecules like H2 and LiH:
 1. Directly run the python code trotter_ferm.py for the fermionic partitioning methods and run trotter_qubit.py for the qubit-based partitioning techniques
+
+
   To generate the $\epsilon$ table for larger molecules with a high number of fragments for trotterization like, $H_{2}O$, $BeH_{2}$, $NH_{3}$, follow the subsequent steps:
 
 
