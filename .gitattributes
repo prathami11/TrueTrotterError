@@ -1,3 +1,7 @@
 nh3_GFROFrags filter=lfs diff=lfs merge=lfs -text
 h2o_GFROFrags filter=lfs diff=lfs merge=lfs -text
 beh2_GFROFrags filter=lfs diff=lfs merge=lfs -text
+nh3_GFROLCUFrags filter=lfs diff=lfs merge=lfs -text
+h2o_GFROLCUFrags filter=lfs diff=lfs merge=lfs -text
+beh2_GFROLCUFrags filter=lfs diff=lfs merge=lfs -text
+nh3_GCSASDFrags filter=lfs diff=lfs merge=lfs -text
