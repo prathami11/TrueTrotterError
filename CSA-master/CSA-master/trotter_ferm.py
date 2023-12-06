@@ -15,7 +15,8 @@ import pickle
 import saveload_utils as sl
 
 def trotter(method,mol,n_qubits,gs,deltaT):
-    
+    start = time.time()
+    print("Start")
     #Creating Directory for the molecule to store results, uncomment when needed
     #if not os.path.isdir('./Results/'+mol):
     #    os.mkdir('./Results/'+mol+'/')
@@ -88,6 +89,8 @@ def trotter(method,mol,n_qubits,gs,deltaT):
         trotter_error.append( min(xf_trotter[peaks_trotter])-gs)
     
     results = {}
+    total_time = time.time()-start
+    total_time = total_time/3600 # in hrs
     dt_sq = deltat**2
     slope, intercept, r_value, p_value, std_err = sp.stats.linregress(dt_sq, trotter_error)
     results['slope'] = slope
@@ -95,6 +98,7 @@ def trotter(method,mol,n_qubits,gs,deltaT):
     results['r_value']= r_value
     results['trotter_error']= trotter_error
     results['number_frags'] = number_frags
+    results['total_time'] = total_time
     f=open('./Results/'+mol+'/'+method,'wb')
     pickle.dump(results,f)
     f.close()
