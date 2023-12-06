@@ -15,17 +15,18 @@ import pickle
 import saveload_utils as sl
 import time
 
-def trotter(method, n_qubits, gs, constant):
+def trotter(method,mol, n_qubits, gs, constant,deltaT):
     start = time.time()
     print("Start")
-    if not os.path.isdir('./Results/BeH2'):
-        os.mkdir('./Results/BeH2/')
-    # openfermion hartree fock wavefunction in jordan wigner representation
+    #Creating Directory for the molecule to store results, uncomment when needed
+    #if not os.path.isdir('./Results/'+mol):
+    #    os.mkdir('./Results/'+mol+'/')
     print("Running for method:",method)
-    hf = openfermion.jw_hartree_fock_state(6,14)
+    # openfermion hartree fock wavefunction in jordan wigner representation
+    hf = openfermion.jw_hartree_fock_state(6,14) #change as per the molecule
 
     # Importing Fragments
-    f = open("./Frag_Lib/"+method+"/beh2_"+method+"Frags", 'rb')
+    f = open("./Frag_Lib/"+method+"/"+mol+"_"+method+"Frags", 'rb')
     dict = pickle.load(f)
     f.close()
     ListFrags=dict['grouping'] # stores all the fragments
@@ -39,8 +40,6 @@ def trotter(method, n_qubits, gs, constant):
     ## Defining control parameters
     # Total Time of propagation
     T = 10000000
-    # Sample Spacing i.e, T/deltaT is the No. of points fed to the fourier tranform
-    deltaT = 0.2
     m = np.arange(1,11,1)
     # trotter steps
     deltat = deltaT/m
@@ -89,29 +88,30 @@ def trotter(method, n_qubits, gs, constant):
     total_time = time.time()-start
     total_time = total_time/3600 # in hrs
     dt_sq = deltat**2
-    #slope, intercept, r_value, p_value, std_err = sp.stats.linregress(dt_sq, trotter_error)
-    #results['slope'] = slope
+    slope, intercept, r_value, p_value, std_err = sp.stats.linregress(dt_sq, trotter_error)
+    results['slope'] = slope
     results['dt_sq'] = dt_sq
-    #results['r_value']= r_value
+    results['r_value']= r_value
     results['trotter_error']= trotter_error
     results['number_frags'] = number_frags
     results['total_time'] = total_time
-    f=open('./Results/BeH2/'+method,'wb')
+    f=open('./Results/'+mol+'/'+method,'wb')
     pickle.dump(results,f)
     f.close()
     print("Done executing after",total_time, "hrs")
 #if not os.path.isdir('./Results/'):
 #    os.mkdir('./Results/')
-h_ferm=sl.load_fermionic_hamiltonian("beh2",path_prefix) # fermionic hamiltonian
+mol = "beh2" # options: h2, lih, beh2, h2o, nh3
+method = "fc" # options: qwc, qwc_si, fc, fc_si
+h_ferm=sl.load_fermionic_hamiltonian(mol,path_prefix) # fermionic hamiltonian
 n_qubits = openfermion.count_qubits(h_ferm) # no. of qubits
 h_jw = openfermion.transforms.jordan_wigner(h_ferm) # jordan wigner transformatio for qubit operator
 # eigenspectrum of the hamiltonian
 spectrum = openfermion.eigenspectrum(h_jw)
 gs = min(spectrum) # ground state energy
 constant = h_jw.constant 
-# generating results for qubit based partitioning methods (options: fc, qwc, fc_si, qwc_si)
-# coment / uncomment these lines for the required methods
-trotter("fc",n_qubits,gs,constant)
-trotter("fc_si",n_qubits,gs,constant)
-trotter("qwc", n_qubits,gs,constant)
-trotter("qwc_si",n_qubits,gs,constant)
+# Sample Spacing i.e, T/deltaT is the No. of points fed to the fourier tranform
+deltaT = 0.2 # change with molecule # 2 for h2, 0.39 for lih, 0.2 for beh2, 0.04 for h2o, 0.05 for nh3 
+# generating results for qubit based partitioning methods 
+trotter(metho,mol,n_qubits,gs,constant,deltaT)
+
