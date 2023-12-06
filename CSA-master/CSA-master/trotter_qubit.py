@@ -113,5 +113,5 @@ constant = h_jw.constant
 # Sample Spacing i.e, T/deltaT is the No. of points fed to the fourier tranform
 deltaT = 0.2 # change with molecule # 2 for h2, 0.39 for lih, 0.2 for beh2, 0.04 for h2o, 0.05 for nh3 
 # generating results for qubit based partitioning methods 
-trotter(metho,mol,n_qubits,gs,constant,deltaT)
+trotter(method,mol,n_qubits,gs,constant,deltaT)
 
