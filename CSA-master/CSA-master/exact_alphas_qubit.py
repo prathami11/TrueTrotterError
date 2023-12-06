@@ -54,9 +54,9 @@ def trotter(method,mol, h_jw, n_qubits,constant,t):
     pickle.dump(results,f)
     f.close()
     print("Done executing after",total_time, "hrs")
-
-
-
+# will generate an error if directory already exists
+#if not os.path.isdir('./Exact_Alphas/'):
+#    os.mkdir('./Exact_Alphas/')
 t=1e-5 # time step
 method = "fc" # options: qwc, qwc_si, fc, fc_si
 mol = "h2" # option: h2, lih, beh2, h2o, nh3
