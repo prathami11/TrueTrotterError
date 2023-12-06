@@ -23,13 +23,13 @@ def shrink_frags(method, mol, index,n_qubits):
     for i in range(len(ListFrags)):
         print(i)
         ListFrags[i] = openfermion.linalg.get_sparse_operator(ListFrags[i],n_qubits)
-    v = np.load("./SymFrags/BeH2_v.npy") # load the unitary matrix for the respective molecule
-    vdag = np.load("./SymFrags/BeH2_vdag.npy")
+    v = np.load("./SymFrags/'+mol+'_v.npy") # load the unitary matrix for the respective molecule
+    vdag = np.load("./SymFrags/'+mol+'_vdag.npy")
     print("Shrinking")
     for i in range(len(ListFrags)):
         print(i)
         x = np.matmul(vdag,np.matmul(ListFrags[i].todense(),v))
-        np.save("./MatrixFrags/BeH2/GFRO/"+str(i), x[0:index,0:index])# change index value wrt the molecule
+        np.save("./MatrixFrags/"+mol+"/"+method+"/"+str(i), x[0:index,0:index])# change index value wrt the molecule
     total_time = time.time()-start
     print("time in hrs",total_time/3600)
 index = 490 # options 3 for h2, 105 for lih, 490 for beh2, 196 for h2o, 8008 for nh3
