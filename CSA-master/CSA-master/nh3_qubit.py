@@ -17,8 +17,9 @@ import saveload_utils as sl
 def trotter(method, n_qubits, gs, constant):
     start = time.time()
     print("Start")
-    #if not os.path.isdir('./Results/NH3'):
-    #    os.mkdir('./Results/NH3/')
+    # Creating Directory for the molecule to store results, uncomment when needed
+    #if not os.path.isdir('./Results/nh3'):
+    #    os.mkdir('./Results/nh3/')
     # Importing Fragments
     f = open("./Tapered/nh3_"+method+"_jw_TapFrags", 'rb')
     dict = pickle.load(f)
@@ -30,7 +31,7 @@ def trotter(method, n_qubits, gs, constant):
     ## Defining control parameters
     # Total Time of propagation
     m = np.arange(1,11,1)
-    deltaT = 0.05
+    deltaT = 0.05 # deltaT for nh3
     # trotter steps
     deltat = deltaT/m
     # discrete evolution times
@@ -66,7 +67,7 @@ def trotter(method, n_qubits, gs, constant):
     results['trotter_error']= trotter_error
     results['number_frags'] = number_frags
     results['total_time'] = total_time
-    f=open('./Results/NH3/'+method,'wb')
+    f=open('./Results/nh3/'+method,'wb')
     pickle.dump(results,f)
     f.close()
     print("Done executing after",total_time, "hrs")
@@ -78,9 +79,6 @@ h_jw = openfermion.transforms.jordan_wigner(h_ferm) # jordan wigner transformati
 spectrum = openfermion.eigenspectrum(h_jw)
 gs = min(spectrum) # ground state energy
 constant = h_jw.constant 
-# generating results for qubit based partitioning methods (options: fc, qwc, fc_si, qwc_si)
-# coment / uncomment these lines for the required methods
-trotter("fc",n_qubits,gs,constant)
-#trotter("fc_si",n_qubits,gs,constant)
-#trotter("qwc", n_qubits,gs,constant)
-#trotter("qwc_si",n_qubits,gs,constant)
+method ="fc" #(options: fc, qwc, fc_si, qwc_si), change as needed
+# generating results for qubit based partitioning methods 
+trotter(method,n_qubits,gs,constant)
