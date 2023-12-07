@@ -20,7 +20,7 @@ B. For qubit-based partitioning methods:
 
 To generate the $\alpha_{exact}$ Table for fermionic and qubit-based partitioning techniques, run the codes exact_alphas_ferm.py and exact_alphas_qubit.py respectively.
 
-\texbf{Generation of qubit-tapered fragments}
+\textbf{Generation of qubit-tapered fragments}
 
 We can use TapQubFrags.py script to perform tapering fragment-wise. It is assumed that the Hamiltonian fragments are pre-computed.
 It provides the option of saving the Clifford unitary that renders the Hamiltonian and Hamiltonian fragments in
