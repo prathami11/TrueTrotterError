@@ -12,7 +12,7 @@ On top of the calculation of C1 and C2 operators, this script computes the scali
 
 This script generates and stores results under an automatically generated PTResults directory.
 
-To obtain heuristic scalings $\epsilion_{PT}$ based on eigenstates and eigenvalues of a mean-field approximated electronic Hamiltonian, one can use the script PTEsts.py according to the command
+To obtain heuristic scalings $\epsilon_{PT}$ based on eigenstates and eigenvalues of a mean-field approximated electronic Hamiltonian, one can use the script PTEsts.py according to the command
 
 python PTEsts.py (mol) (nqubs) (meth) (eta) (states)
 
