@@ -19,3 +19,18 @@ B. For qubit-based partitioning methods:
    2. Rest of the molecules don't need qubit-tapering, and the $\epsilon$ values can be directly generated from trotter_qubit.py.
 
 To generate the $\alpha_{exact}$ Table for fermionic and qubit-based partitioning techniques, run the codes exact_alphas_ferm.py and exact_alphas_qubit.py respectively.
+
+\textbf{Generation of qubit-tapered fragments}
+
+We can use TapQubFrags.py script to perform tapering fragment-wise. It is assumed that the Hamiltonian fragments are pre-computed.
+It provides the option of saving the Clifford unitary that renders the Hamiltonian and Hamiltonian fragments in
+taperable form. If this option is not chosen, it is assumed that the Clifford unitary was pre-computed and it will be
+loaded.
+usage: python TapQubFrags.py (mol) (nqubs) (eta) (meth) (encod) (saveCliff)
+
+mol is the name of the molecule
+nqubs is the number of qubits that encode the electronic Hamiltonian
+eta is the number of electrons of the electronic ground state,
+encond can be either bk or jw, depending of the encoding of the Hamiltonian and Hamiltonian fragments
+saveCliff is either False or True; if True, the Clifford unitary and eigenvalues to perform tapering are calculated and saved,
+otherwise, it is assumed that those were precomputed and saved and  will be loaded.
