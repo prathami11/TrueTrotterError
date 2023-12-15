@@ -8,7 +8,7 @@ from scipy import sparse
 import os
 import pickle
 mol = "h2" # options: h2, lih, beh2, h2o, nh3
-n_elec = 2
+n_elec = 2 # no. of ground state electrons of the respective molecule, modify accordingly
 
 h_ferm=sl.load_fermionic_hamiltonian(mol,path_prefix) #loads the Openfermion Fermion operator corresponding to the
                                                       #molecule mol
@@ -21,7 +21,6 @@ S_sq = Sx_op**2+Sy_op**2+Sz_op**2
 n_op = of.linalg.get_sparse_operator(of.hamiltonians.number_operator(n_qubits),n_qubits)
 print("exponentiating")
 import scipy as sp
-#n_elec = 2 # no. of ground state electrons of the respective molecule, modify accordingly
 fn =sp.sparse.linalg.expm(-1e8*((n_op-n_elec*sp.sparse.identity(2**n_qubits))**2))
 fsq =sp.sparse.linalg.expm(-1e8*((S_sq)**2))
 fz = sp.sparse.linalg.expm(-1e8*((Sz_op)**2))
@@ -31,8 +30,8 @@ w, v =np.linalg.eigh(G.todense())
 idx = w.argsort()[::-1]
 w = w[idx]
 #Creating Directory for the molecule to store results, uncomment when needed
-#if not os.path.isdir('./SymFrags/'):
-#    os.mkdir('./SymFrags/')
+if not os.path.isdir('./SymFrags/'):
+    os.mkdir('./SymFrags/')
 np.save('./SymFrags/'+mol+'_w', w)
 v = v[:,idx]
 np.save('./SymFrags/'+mol+'_v', v) # save unitary matrix
