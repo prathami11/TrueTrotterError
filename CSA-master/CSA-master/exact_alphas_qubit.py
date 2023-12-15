@@ -8,7 +8,7 @@ path_prefix="../CSA-master/" ##Top of the project, corresponding to CSA/
 import sys
 sys.path.append(path_prefix)
 import time 
-from scipy import linalg
+from scipy.sparse import linalg
 import pickle
 import saveload_utils as sl
 
@@ -16,8 +16,8 @@ def trotter(method,mol, h_jw, n_qubits,constant,t):
     start = time.time()
     print("Start")
     # Creating Directory for the molecule to store results, uncomment when needed
-    #if not os.path.isdir('./Exact_Alphas/'+mol):
-    #    os.mkdir('./Exact_Alphas/'+mol+'/')
+    if not os.path.isdir('./Exact_Alphas/'+mol):
+        os.mkdir('./Exact_Alphas/'+mol+'/')
     # Importing Fragments
     f = open("./Frag_Lib/"+method+"/"+mol+"_"+method+"Frags", 'rb')
     dict = pickle.load(f)
@@ -55,11 +55,11 @@ def trotter(method,mol, h_jw, n_qubits,constant,t):
     f.close()
     print("Done executing after",total_time, "hrs")
 # will generate an error if directory already exists
-#if not os.path.isdir('./Exact_Alphas/'):
-#    os.mkdir('./Exact_Alphas/')
+if not os.path.isdir('./Exact_Alphas/'):
+    os.mkdir('./Exact_Alphas/')
 t=1e-5 # time step
 method = "fc" # options: qwc, qwc_si, fc, fc_si
-mol = "h2" # option: h2, lih, beh2, h2o, nh3
+mol = "lih" # option: h2, lih, beh2, h2o, nh3
 # hamiltonian
 h_ferm=sl.load_fermionic_hamiltonian(mol,path_prefix) # fermionic hamiltonian wrt molecule
 h_jw = openfermion.transforms.jordan_wigner(h_ferm)
