@@ -17,11 +17,11 @@ def trotter(method,mol,gs,deltaT):
     start = time.time()
     print("Start")
     #Creating Directory for the molecule to store results, uncomment when needed
-    #if not os.path.isdir('./Results/'+mol):
-    #    os.mkdir('./Results/'+mol+'/')
+    if not os.path.isdir('./Results/'+mol):
+        os.mkdir('./Results/'+mol+'/')
     print("Running for method:",method)
     #symmetry-adapted wavefunction
-    hf = np.load("./SymFrags/'+mol+'_SymHf.npy")
+    hf = np.load("./SymFrags/"+mol+"_SymHf.npy")
    
     ## Defining control parameters
     # Total Time of propagation
@@ -41,11 +41,11 @@ def trotter(method,mol,gs,deltaT):
         n = np.arange(0,T/deltat[k],deltaT/deltat[k])
         n = n.astype(int)
         # constructing propagator dt
-        x = np.load("./MatrixFrags/'+mol+'/"+method+"/0.npy")
+        x = np.load('./MatrixFrags/'+mol+'/'+method+'/0.npy')
         trotter_state = linalg.expm(-1j*x*deltat[k])
-        for j in np.arange(1,91,1): # modify the length as per the number  of fragments of the respective method
+        for j in np.arange(1,3,1): # modify the length as per the number  of fragments of the respective method
             #print(j)
-            x = np.load("./MatrixFrags/'+mol+'/"+method+"/"+str(j)+".npy")
+            x = np.load("./MatrixFrags/"+mol+"/"+method+"/"+str(j)+".npy")
             trotter_state = linalg.expm(-1j*x*deltat[k])@trotter_state
         w, v = sp.linalg.eig(trotter_state)
         u = np.stack(v)
@@ -88,7 +88,6 @@ def trotter(method,mol,gs,deltaT):
     results['dt_sq'] = dt_sq
     results['r_value']= r_value
     results['trotter_error']= trotter_error
-    results['number_frags'] = number_frags
     results['total_time'] = total_time
     f=open('./Results/'+mol+'/'+method,'wb')
     pickle.dump(results,f)
@@ -97,11 +96,11 @@ def trotter(method,mol,gs,deltaT):
 #if not os.path.isdir('./Results/'):
 #    os.mkdir('./Results/')
 # importing femrion hamiltonian
-mol = "beh2" # options: h2, lih, beh2, h2o, nh3
-method = "GFROLCU" # options: svd, SVDLCU, FRO, GFRO, GFROLCU, GCSASD
-gs = np.load("./SymFrags/'+mol+'_gs.npy")
+mol = "h2" # options: h2, lih, beh2, h2o, nh3
+method = "FRO" # options: svd, SVDLCU, FRO, GFRO, GFROLCU, GCSASD
+gs = np.load('./SymFrags/'+mol+'_gs.npy')
 # Sample Spacing i.e, T/deltaT is the No. of points fed to the fourier tranform
-deltaT = 0.2 # change with molecule # 2 for h2, 0.39 for lih, 0.2 for beh2, 0.04 for h2o, 0.05 for nh3 
+deltaT = 2 # change with molecule # 2 for h2, 0.39 for lih, 0.2 for beh2, 0.04 for h2o, 0.05 for nh3 
 # generating results for fermionic based partitioning methods 
 trotter(method,mol,gs,deltaT)
 
